@@ -1,0 +1,48 @@
+.searchBox{
+    position: relative;
+    width: 180px;
+    height: 40px;
+}
+
+.searchIcon{
+    position: absolute;
+top: 12px;
+left: 10px;
+}
+
+.searchInput{
+    width: 180px;
+    height: 40px;
+    padding-left: 35px;
+    border-radius: 8px;
+    border: transparent;
+    background-color: #e8ebf1d0;
+}
+
+.tripsList{
+    display: flex;
+    gap: 20px;
+}
+
+.tripsListItem{
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.tripsListItem:hover,
+.tripsListItem:focus,
+.tripsListItem:active {
+border: 1px solid #1890ff;
+}
+
+.itemThumb{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+}
+
+.tripDates{
+    font-size: 12px;
+    color: rgb(135, 135, 142);
+}
