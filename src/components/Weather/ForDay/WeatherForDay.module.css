@@ -1,6 +1,12 @@
 .wrapper {
-    width: 450px;
-    height: 550px;
-    background-color: rgb(25, 11, 59);
-    color: white;
+  width: 450px;
+  height: 550px;
+  background-color: rgb(25, 11, 59);
+  color: white;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(31, 13, 65, 0.6),
+      rgba(31, 13, 65, 0.6)
+    ),
+    url("/public/blackClouds.jpg");
 }

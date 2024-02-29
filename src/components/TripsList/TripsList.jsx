@@ -1,65 +1,141 @@
-import trips from "../../helpers/trips.json";
-import { IoSearch } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { FaPlus } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+import trips from "../../helpers/trips.json";
 import styles from "./TripsList.module.css";
-import { useState } from "react";
 import WeatherForDay from "../Weather/ForDay/WeatherForDay";
 import Modal from "../Modal/Modal";
 import Search from "../Search/Search";
-// import WeeklyWeather from "../Weather/ForWeek/WeeklyWeather";
+import WeeklyWeather from "../Weather/ForWeek/WeeklyWeather";
+
+const LS_KEY = "trips";
+
+const useLocalStorage = (key, defaultValue) => {
+  const [state, setState] = useState(() => {
+    return JSON.parse(window.localStorage.getItem(key)) ?? defaultValue;
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+
+  return [state, setState];
+};
 
 const TripsList = () => {
   const [activeTrip, setActiveTrip] = useState(trips[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [tripsList, setTripsList] = useLocalStorage(LS_KEY, trips);
   const [filter, setFilter] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const tripsPerPage = 3;
 
   const changeFilter = (event) => {
     setFilter(event.currentTarget.value);
+    setCurrentPage(1);
   };
 
   const normalizedFilter = filter.toLowerCase();
-  const visibleTrips = trips.filter((trip) =>
-    trip.city.toLowerCase().includes(normalizedFilter)
-  );
+
+  const filterAndSortTrips = (trips, filterText) => {
+    const filteredTrips = trips.filter((trip) =>
+      trip.city.toLowerCase().includes(filterText.toLowerCase())
+    );
+
+    const sortedTrips = filteredTrips.sort((trip1, trip2) => {
+      const datePartsA = trip1.startDate.split("/").join("");
+      const datePartsB = trip2.startDate.split("/").join("");
+      return datePartsA - datePartsB;
+    });
+
+    return sortedTrips;
+  };
 
   const changeVisibilityModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const formSubmitHandler = (data) => {
+    const newTrip = {
+      id: nanoid(),
+      city: data.city,
+      photo_url:
+        "https://engineering.case.edu/sites/default/files/styles/715x447/public/plane-take-off-feat.jpg?itok=jMjZMlWG",
+      startDate: data.startDate,
+      endDate: data.endDate,
+    };
+
+    setTripsList((prevState) => [...prevState, newTrip]);
+    filterAndSortTrips(tripsList, normalizedFilter);
+  };
+
+  const visibleTrips = filterAndSortTrips(tripsList, normalizedFilter);
+
+  const getIconPath = (iconName) => {
+    return `/icons/${iconName}.svg`;
+  };
+
+  const indexOfLastTrip = currentPage * tripsPerPage;
+  const indexOfFirstTrip = indexOfLastTrip - tripsPerPage;
+  const currentTrips = visibleTrips.slice(indexOfFirstTrip, indexOfLastTrip);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.contentHolder}>
-        <h1>Weather Forecast</h1>
+        <h1 className={styles.header}>
+          Weather <span style={{ fontWeight: "600" }}>Forecast</span>
+        </h1>
         <Search filter={filter} onChange={changeFilter} />
-        <ul className={styles.tripsList}>
-          {visibleTrips.map((trip) => (
-            <li
-              key={trip.id}
-              className={styles.tripsListItem}
-              onClick={() => setActiveTrip(trip)}
+        <div className={styles.tripWrapper}>
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={styles.paginationBtn}
+          >
+            <IoIosArrowBack size={20} />
+          </button>
+          <ul className={styles.tripsList}>
+            {currentTrips.map((trip) => (
+              <li
+                key={trip.id}
+                className={styles.tripsListItem}
+                onClick={() => setActiveTrip(trip)}
+              >
+                <img src={trip.photo_url} width={180} height={180}></img>
+                <div className={styles.itemThumb}>
+                  <p>{trip.city}</p>
+                  <p className={styles.tripDates}>
+                    {trip.startDate} - {trip.endDate}
+                  </p>
+                </div>
+              </li>
+            ))}
+            <button
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentTrips.length < tripsPerPage}
+              className={styles.paginationBtn}
             >
-              <img src={trip.photo_url} width={180} height={180}></img>
-              <div className={styles.itemThumb}>
-                <p>{trip.city}</p>
-                <p className={styles.tripDates}>
-                  {trip.startDate} - {trip.endDate}
-                </p>
-              </div>
-            </li>
-          ))}
-          <li className={styles.tripsListItem} onClick={changeVisibilityModal}>
+              <IoIosArrowForward size={20} />
+            </button>
+          </ul>
+          <div className={styles.addTrip} onClick={changeVisibilityModal}>
             <FaPlus />
             <p>Add trip</p>
-          </li>
-        </ul>
-        {/* <WeeklyWeather activeTrip={activeTrip} /> */}
+          </div>
+        </div>
+        <WeeklyWeather activeTrip={activeTrip} getIconPath={getIconPath} />
       </div>
-      <WeatherForDay activeTrip={activeTrip} />
+      <WeatherForDay activeTrip={activeTrip} getIconPath={getIconPath} />
       {isModalOpen && (
         <Modal
           isModalOpen={isModalOpen}
           changeVisibilityModal={changeVisibilityModal}
+          onSubmit={formSubmitHandler}
         />
       )}
     </div>

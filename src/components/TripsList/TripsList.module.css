@@ -10,6 +10,23 @@
     align-items: flex-start;
 }
 
+.header{
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.tripWrapper{
+    display: flex;
+    gap: 10px;
+    min-width: 930px;
+    margin-top: 30px;
+}
+
+.paginationBtn{
+
+}
+
 .tripsList{
     display: flex;
     gap: 20px;
@@ -26,7 +43,8 @@
 .tripsListItem:active {
 border: 1px solid #1890ff;
 }
-.tripsListItem:last-child {
+
+.addTrip {
     width: 180px;
     height: 180px;
     display: flex;
@@ -35,6 +53,7 @@ border: 1px solid #1890ff;
     justify-content: center;
     gap: 5px;
     background-color: #e8ebf1d0;
+    cursor: pointer;
 }
 
 .itemThumb{

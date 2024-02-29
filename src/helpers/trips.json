@@ -1,23 +1,23 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "city": "Berlin",
     "photo_url": "https://media.istockphoto.com/id/636008560/photo/berlin-cityscape-at-sunset-brandenburg-gate.jpg?s=612x612&w=0&k=20&c=OplR7FIuI7pUQ1Itic0rBH7Rp_d_84BUG_JvXftpUOc=",
-    "startDate": "14.07.2024",
-    "endDate": "21.07.2024"
+    "startDate": "14/07/2024",
+    "endDate": "21/07/2024"
   },
   {
-    "id": 2,
+    "id": "2",
     "city": "Tokyo",
     "photo_url": "https://m.media-amazon.com/images/I/61jmvp+-zYL.jpg",
-    "startDate": "17.07.2024",
-    "endDate": "23.07.2024"
+    "startDate": "17/07/2024",
+    "endDate": "23/07/2024"
   },
   {
-    "id": 3,
+    "id": "3",
     "city": "Barcelona",
     "photo_url": "https://fotografias.lasexta.com/clipping/cmsimages01/2023/11/14/D801263A-9757-406A-AEEB-24CBE63EB158/sagrada-familia-barcelona-obras_104.jpg?crop=1414,1414,x326,y0&width=1200&height=1200&optimize=low&format=webply",
-    "startDate": "16.07.2024",
-    "endDate": "26.07.2024"
+    "startDate": "16/07/2024",
+    "endDate": "26/07/2024"
   }
 ]

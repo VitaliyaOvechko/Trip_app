@@ -3,7 +3,7 @@ import styles from "./Timer.module.css";
 
 const Timer = ({ startDate }) => {
   const calculateTimeLeft = () => {
-    const parts = startDate.split(".");
+    const parts = startDate.split("/");
     const targetDate = new Date(parts[2], parts[1] - 1, parts[0]);
     const currentDate = new Date();
 

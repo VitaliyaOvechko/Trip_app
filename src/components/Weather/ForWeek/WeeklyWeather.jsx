@@ -1,50 +1,59 @@
-// import { getWeatherForWeek } from "../../../Api";
-// import styles from "./WeeklyWeather.module.css";
-// import { useEffect, useState } from "react";
+import { getWeatherForWeek } from "../../../Api";
+import styles from "./WeeklyWeather.module.css";
+import { useEffect, useState } from "react";
 
-// const WeeklyWeather = ({ activeTrip }) => {
-//   const [focast, setFocast] = useState();
+const WeeklyWeather = ({ activeTrip, getIconPath }) => {
+  const [forecast, setForecast] = useState([]);
 
-//   const getWeeklyWeather = async () => {
-//     try {
-//       const results = await getWeatherForWeek(
-//         "Paris",
-//         "2024-02-28",
-//         "2024-03-03"
-//       );
-//       //   setFocast([...results.data.days]);
-//       //   setTemperature(results.data.days[0].temp);
-//       console.log(results);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  function formatDate(date) {
+    const parts = date.split("/");
+    const year = parts[2];
+    const month = parts[1].padStart(2, "0");
+    const day = parts[0].padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
-//   getWeeklyWeather();
+  useEffect(() => {
+    const getWeeklyWeather = async () => {
+      try {
+        const results = await getWeatherForWeek(
+          activeTrip.city,
+          formatDate(activeTrip.startDate),
+          formatDate(activeTrip.endDate)
+        );
+        setForecast([...results.data.days]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getWeeklyWeather();
+  }, [activeTrip]);
 
-//   //   useEffect(() => {
-//   //     const getWeeklyWeather = async () => {
-//   //       try {
-//   //         const results = await getWeatherForWeek(
-//   //           "Paris",
-//   //           "2024-02-28",
-//   //           "2024-03-03"
-//   //         );
-//   //         //   setFocast([...results.data.days]);
-//   //         //   setTemperature(results.data.days[0].temp);
-//   //         console.log(results);
-//   //       } catch (error) {
-//   //         console.log(error);
-//   //       }
-//   //     };
-//   //     getWeeklyWeather();
-//   //   }, [activeTrip]);
+  const dayOfWeek = (date) => {
+    const dayOfWeekIndex = new Date(date).getDay();
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return daysOfWeek[dayOfWeekIndex];
+  };
 
-//   return (
-//     <div>
-//       <p>Week</p>
-//     </div>
-//   );
-// };
+  return (
+    <div className={styles.weekList}>
+      {forecast.map(({ icon, temp, datetime, datetimeEpoch }) => (
+        <div key={datetimeEpoch}>
+          <p>{dayOfWeek(datetime)}</p>
+          <img src={getIconPath(icon)} alt="Weather Icon" />
+          <p>{temp}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-// export default WeeklyWeather;
+export default WeeklyWeather;

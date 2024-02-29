@@ -1,10 +1,9 @@
 [
- {"id": 1, "name": "London"},
+    {"id": 1, "name": "London"},
     {"id": 2, "name": "Paris"},
     {"id": 3, "name": "Madrid"},
     {"id": 4, "name": "Berlin"},
     {"id": 5, "name": "Rome"},
-    {"id": 6, "name": "Moscow"},
     {"id": 7, "name": "Athens"},
     {"id": 8, "name": "Vienna"},
     {"id": 9, "name": "Amsterdam"},
