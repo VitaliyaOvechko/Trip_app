@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
+import cities from "../../helpers/cities.json";
 import { IoClose } from "react-icons/io5";
 import styles from "./Modal.module.css";
-import cities from "../../helpers/cities.json";
-import { useEffect, useState } from "react";
 
 const Modal = ({ isModalOpen, changeVisibilityModal, onSubmit }) => {
   const [city, setCity] = useState("");
@@ -9,15 +9,21 @@ const Modal = ({ isModalOpen, changeVisibilityModal, onSubmit }) => {
   const [endDate, setEndDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
 
-  useEffect(() => {
-    const today = new Date();
-    const availableDate = new Date(today.getTime() + 15 * 86400000);
-    const year = availableDate.getFullYear();
-    const month = (availableDate.getMonth() + 1).toString().padStart(2, "0");
-    const day = availableDate.getDate().toString().padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day}`;
-    setMaxDate(formattedDate);
-  }, []);
+  const handleChange = (event) => {
+    switch (event.currentTarget.name) {
+      case "city":
+        setCity(event.target.value);
+        break;
+      case "startDate":
+        setStartDate(event.target.value);
+        break;
+      case "endDate":
+        setEndDate(event.target.value);
+        break;
+      default:
+        return;
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,30 +43,6 @@ const Modal = ({ isModalOpen, changeVisibilityModal, onSubmit }) => {
     changeVisibilityModal();
   };
 
-  const handleChange = (event) => {
-    switch (event.currentTarget.name) {
-      case "city":
-        console.log(event.target);
-        setCity(event.target.value);
-        break;
-      case "startDate":
-        setStartDate(event.target.value);
-        break;
-      case "endDate":
-        setEndDate(event.target.value);
-        break;
-      default:
-        return;
-    }
-  };
-
-  const handleCancel = () => {
-    setCity("");
-    setStartDate("");
-    setEndDate("");
-    changeVisibilityModal();
-  };
-
   useEffect(() => {
     if (isModalOpen) {
       document.body.classList.add("no-scroll");
@@ -71,6 +53,16 @@ const Modal = ({ isModalOpen, changeVisibilityModal, onSubmit }) => {
       document.body.classList.remove("no-scroll");
     };
   }, [isModalOpen]);
+
+  useEffect(() => {
+    const today = new Date();
+    const availableDate = new Date(today.getTime() + 15 * 86400000);
+    const year = availableDate.getFullYear();
+    const month = (availableDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = availableDate.getDate().toString().padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+    setMaxDate(formattedDate);
+  }, []);
 
   return (
     <div className={styles.backdrop}>
@@ -132,7 +124,10 @@ const Modal = ({ isModalOpen, changeVisibilityModal, onSubmit }) => {
             />
           </div>
           <div className={styles.formBtnWrapper}>
-            <button className={styles.cancelBtn} onClick={handleCancel}>
+            <button
+              className={styles.cancelBtn}
+              onClick={() => changeVisibilityModal()}
+            >
               Cancel
             </button>
             <button className={styles.saveBtn} type="submit">

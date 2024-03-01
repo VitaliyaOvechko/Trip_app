@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
+import trips from "../../helpers/trips.json";
+import WeatherForDay from "../Weather/ForDay/WeatherForDay";
+import Modal from "../Modal/Modal";
+import Search from "../Search/Search";
+import WeeklyWeather from "../Weather/ForWeek/WeeklyWeather";
 import { FaPlus } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import trips from "../../helpers/trips.json";
 import styles from "./TripsList.module.css";
-// import WeatherForDay from "../Weather/ForDay/WeatherForDay";
-import Modal from "../Modal/Modal";
-import Search from "../Search/Search";
-// import WeeklyWeather from "../Weather/ForWeek/WeeklyWeather";
 
 const useLocalStorage = (key, defaultValue) => {
   const [state, setState] = useState(() => {
@@ -27,7 +27,6 @@ const TripsList = () => {
   const [activeTrip, setActiveTrip] = useLocalStorage("activeTrip", trips[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
   const tripsPerPage = 3;
 
@@ -92,6 +91,7 @@ const TripsList = () => {
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
+            className={`${currentPage === 1 ? styles.disabledBtn : ""}`}
           >
             <IoIosArrowBack size={20} />
           </button>
@@ -99,12 +99,14 @@ const TripsList = () => {
             {currentTrips.map((trip) => (
               <li
                 key={trip.id}
-                className={`${styles.tripsListItem} ${
-                  activeTrip.id === trip.id ? styles.activeTrip : ""
+                className={` ${
+                  activeTrip.id === trip.id
+                    ? styles.activeTrip
+                    : styles.tripsListItem
                 }`}
                 onClick={() => setActiveTrip(trip)}
               >
-                <img src={trip.photo_url} width={170} height={160}></img>
+                <img src={trip.photo_url} width={170} height={160} />
                 <div className={styles.itemThumb}>
                   <p>{trip.city}</p>
                   <p className={styles.tripDates}>
@@ -117,6 +119,9 @@ const TripsList = () => {
           <button
             onClick={() => paginate(currentPage + 1)}
             disabled={currentTrips.length < tripsPerPage}
+            className={`${
+              currentTrips.length < tripsPerPage ? styles.disabledBtn : ""
+            }`}
           >
             <IoIosArrowForward size={20} />
           </button>
@@ -125,9 +130,9 @@ const TripsList = () => {
             <p>Add trip</p>
           </div>
         </div>
-        {/* <WeeklyWeather activeTrip={activeTrip} getIconPath={getIconPath} /> */}
+        <WeeklyWeather activeTrip={activeTrip} getIconPath={getIconPath} />
       </div>
-      {/* <WeatherForDay activeTrip={activeTrip} getIconPath={getIconPath} /> */}
+      <WeatherForDay activeTrip={activeTrip} getIconPath={getIconPath} />
       {isModalOpen && (
         <Modal
           isModalOpen={isModalOpen}

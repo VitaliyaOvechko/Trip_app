@@ -21,7 +21,6 @@ export const getWeatherForWeek = async (city, startDay, endDay) => {
       `${BASE_URL}${city}/${startDay}/${endDay}?unitGroup=metric&include=days&key=${API_KEY}&contentType=json
 `
     );
-    // console.log(response);
     return response;
   } catch (error) {
     console.log(error);

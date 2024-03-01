@@ -5,7 +5,6 @@ const Timer = ({ startDate }) => {
   const dateParts = startDate.split("/");
   const targetDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
   const currentDate = new Date();
-
   const difference = targetDate.getTime() - currentDate;
 
   const calculateTimeLeft = () => {
