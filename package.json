@@ -1,6 +1,7 @@
 {
   "name": "trip-app",
   "private": true,
+  "homepage": "https://vitaliyaovechko.github.io/Trip_app/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
