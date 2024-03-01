@@ -5,12 +5,10 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import trips from "../../helpers/trips.json";
 import styles from "./TripsList.module.css";
-import WeatherForDay from "../Weather/ForDay/WeatherForDay";
+// import WeatherForDay from "../Weather/ForDay/WeatherForDay";
 import Modal from "../Modal/Modal";
 import Search from "../Search/Search";
-import WeeklyWeather from "../Weather/ForWeek/WeeklyWeather";
-
-const LS_KEY = "trips";
+// import WeeklyWeather from "../Weather/ForWeek/WeeklyWeather";
 
 const useLocalStorage = (key, defaultValue) => {
   const [state, setState] = useState(() => {
@@ -25,9 +23,9 @@ const useLocalStorage = (key, defaultValue) => {
 };
 
 const TripsList = () => {
-  const [activeTrip, setActiveTrip] = useState(trips[0]);
+  const [tripsList, setTripsList] = useLocalStorage("tripsList", trips);
+  const [activeTrip, setActiveTrip] = useLocalStorage("activeTrip", trips[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [tripsList, setTripsList] = useLocalStorage(LS_KEY, trips);
   const [filter, setFilter] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,8 +60,7 @@ const TripsList = () => {
     const newTrip = {
       id: nanoid(),
       city: data.city,
-      photo_url:
-        "https://engineering.case.edu/sites/default/files/styles/715x447/public/plane-take-off-feat.jpg?itok=jMjZMlWG",
+      photo_url: `/public/${data.city}.jpg`,
       startDate: data.startDate,
       endDate: data.endDate,
     };
@@ -95,7 +92,6 @@ const TripsList = () => {
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
-            className={styles.paginationBtn}
           >
             <IoIosArrowBack size={20} />
           </button>
@@ -103,10 +99,12 @@ const TripsList = () => {
             {currentTrips.map((trip) => (
               <li
                 key={trip.id}
-                className={styles.tripsListItem}
+                className={`${styles.tripsListItem} ${
+                  activeTrip.id === trip.id ? styles.activeTrip : ""
+                }`}
                 onClick={() => setActiveTrip(trip)}
               >
-                <img src={trip.photo_url} width={180} height={180}></img>
+                <img src={trip.photo_url} width={170} height={160}></img>
                 <div className={styles.itemThumb}>
                   <p>{trip.city}</p>
                   <p className={styles.tripDates}>
@@ -115,22 +113,21 @@ const TripsList = () => {
                 </div>
               </li>
             ))}
-            <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentTrips.length < tripsPerPage}
-              className={styles.paginationBtn}
-            >
-              <IoIosArrowForward size={20} />
-            </button>
           </ul>
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentTrips.length < tripsPerPage}
+          >
+            <IoIosArrowForward size={20} />
+          </button>
           <div className={styles.addTrip} onClick={changeVisibilityModal}>
             <FaPlus />
             <p>Add trip</p>
           </div>
         </div>
-        <WeeklyWeather activeTrip={activeTrip} getIconPath={getIconPath} />
+        {/* <WeeklyWeather activeTrip={activeTrip} getIconPath={getIconPath} /> */}
       </div>
-      <WeatherForDay activeTrip={activeTrip} getIconPath={getIconPath} />
+      {/* <WeatherForDay activeTrip={activeTrip} getIconPath={getIconPath} /> */}
       {isModalOpen && (
         <Modal
           isModalOpen={isModalOpen}

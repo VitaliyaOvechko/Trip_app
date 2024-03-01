@@ -1,4 +1,42 @@
-.weekList{
-    display: flex;
-    gap: 10px;
+.title {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: start;
+}
+
+.weekList {
+  width: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  overflow-x: scroll;
+}
+
+.weekList::-webkit-scrollbar {
+  height: 10px;
+  background-color: rgba(90, 89, 89, 0.1);
+  border-radius: 8px;
+}
+
+.weekList::-webkit-scrollbar-thumb {
+  background: #d4d3d3;
+  border-radius: 8px;
+}
+
+.weekListItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+}
+
+.day {
+  color: rgb(166, 165, 165);
+}
+
+.temperature {
+  font-weight: 500;
 }

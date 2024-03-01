@@ -40,6 +40,7 @@ const Modal = ({ isModalOpen, changeVisibilityModal, onSubmit }) => {
   const handleChange = (event) => {
     switch (event.currentTarget.name) {
       case "city":
+        console.log(event.target);
         setCity(event.target.value);
         break;
       case "startDate":

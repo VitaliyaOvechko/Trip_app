@@ -1,70 +1,72 @@
-.mainWrapper{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 30px;
+.mainWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 30px;
 }
 
-.contentHolder{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.contentHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.header{
-    font-size: 20px;
-    font-weight: 400;
-    margin-bottom: 30px;
+.header {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 30px;
 }
 
-.tripWrapper{
-    display: flex;
-    gap: 10px;
-    min-width: 930px;
-    margin-top: 30px;
+.tripWrapper {
+  display: flex;
+  gap: 10px;
+  min-width: 820px;
+  margin: 30px 0;
 }
 
-.paginationBtn{
-
+.tripsList {
+  display: flex;
+  gap: 20px;
 }
 
-.tripsList{
-    display: flex;
-    gap: 20px;
-}
-
-.tripsListItem{
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition-property: border;
-    transition-duration: 350ms;
+.tripsListItem {
+  border: 1px solid #e1dcdc74;
+  cursor: pointer;
+  transition-property: border;
+  transition-duration: 350ms;
 }
 .tripsListItem:hover,
-.tripsListItem:focus,
-.tripsListItem:active {
-border: 1px solid #1890ff;
+.tripsListItem:focus {
+  border: 1px solid #708eaac9;
+}
+
+.activeTrip {
+  border: 1px solid #1890ff;
 }
 
 .addTrip {
-    width: 180px;
-    height: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    background-color: #e8ebf1d0;
-    cursor: pointer;
+  width: 170px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: #e8ebf1d0;
+  cursor: pointer;
 }
 
-.itemThumb{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 15px;
+.itemThumb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
-.tripDates{
-    font-size: 12px;
-    color: rgb(135, 135, 142);
+.tripDates {
+  font-size: 10px;
+  font-weight: normal;
+  color: rgb(135, 135, 142);
 }

@@ -1,12 +1,51 @@
 .wrapper {
   width: 450px;
-  height: 550px;
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 120px;
   background-color: rgb(25, 11, 59);
   color: white;
   background-image: linear-gradient(
       to bottom,
-      rgba(31, 13, 65, 0.6),
-      rgba(31, 13, 65, 0.6)
+      rgba(56, 36, 92, 0.6),
+      rgba(56, 36, 92, 0.6)
     ),
     url("/public/blackClouds.jpg");
+}
+
+.dailyWeatherBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.day {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.dailyWeather {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.temperature {
+  position: relative;
+  font-size: 40px;
+}
+
+.city {
+  font-size: 24px;
+  font-weight: 200;
+}
+
+.temperature::after {
+  content: "°C";
+  position: absolute;
+  font-size: 16px;
+  font-weight: 200;
 }
